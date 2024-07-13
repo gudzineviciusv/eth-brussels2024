@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import AccountManagerABI from '../web3/abi/ComeToMyFuneral.json';
 import { useAccount } from 'wagmi';
-import {  arbitrumSepolia, lineaTestnet } from 'wagmi/chains';
+import { arbitrumSepolia, lineaTestnet } from 'wagmi/chains';
 import { incoNetwork, zircuitTestnet } from '@/components/wrappers/Web3Provider';
-
 
 const useAccountManager = () => {
   const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
@@ -15,29 +14,54 @@ const useAccountManager = () => {
   const { chainId } = useAccount();
 
   const contractAddress = {
-    [arbitrumSepolia.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5', //add supportedAccount
+    [arbitrumSepolia.id]: '0xC4b46eE0533625Dad498d632f068c795Fa9bF5be',
     [lineaTestnet.id]: '0xCC03f54E4A9D73331B9bC1cAc192cF89BB957472',
-    [incoNetwork.id]: '0x',
-    [zircuitTestnet.id]: '0x',
-    }[chainId || 1];
+    [incoNetwork.id]: '0x', // Replace with actual address
+    [zircuitTestnet.id]: '0x', // Replace with actual address
+  }[chainId || 1];
+
+  const initializeContract = async () => {
+    try {
+      if (typeof window.ethereum !== 'undefined' && contractAddress) {
+        console.log('Contract address', contractAddress);
+
+        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(web3Provider);
+
+        const signer = web3Provider.getSigner();
+        setSigner(signer);
+
+        const accountAddress = await signer.getAddress();
+        setAccount(accountAddress);
+
+        const accountManagerContract = new ethers.Contract(contractAddress, AccountManagerABI, signer);
+        console.log('Web3 provider', accountManagerContract);
+
+        setContract(accountManagerContract);
+        console.log('Contract initialized');
+      }
+    } catch (error) {
+      console.error('Error initializing contract:', error);
+      setAccount(null);
+      setProvider(null);
+      setSigner(null);
+      setContract(null);
+    }
+  };
 
   useEffect(() => {
-    if (typeof window.ethereum !== 'undefined' && contractAddress) {
-      const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(web3Provider);
-
-      web3Provider.getSigner().getAddress()
-        .then(address => setAccount(address))
-        .catch(() => setAccount(null));
-
-      setSigner(web3Provider.getSigner());
-
-      const accountManagerContract = new ethers.Contract(contractAddress!, AccountManagerABI, web3Provider.getSigner());
-      setContract(accountManagerContract);
-    }
+    initializeContract();
   }, [contractAddress]);
 
+  const ensureContract = async () => {
+    if (!contract) {
+      await initializeContract();
+    }
+    return contract;
+  };
+
   const createAccount = async () => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.createAccount();
       await tx.wait();
@@ -45,6 +69,7 @@ const useAccountManager = () => {
   };
 
   const addToWhiteList = async (address: string, message: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.addToWhiteList(address, message);
       await tx.wait();
@@ -52,6 +77,7 @@ const useAccountManager = () => {
   };
 
   const addToBlackList = async (address: string, message: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.addToBlackList(address, message);
       await tx.wait();
@@ -59,6 +85,7 @@ const useAccountManager = () => {
   };
 
   const setAdministratorAccount = async (address: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.setAdministratorAccount(address);
       await tx.wait();
@@ -66,6 +93,7 @@ const useAccountManager = () => {
   };
 
   const changeAdmin = async (newAdmin: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.changeAdmin(newAdmin);
       await tx.wait();
@@ -73,6 +101,7 @@ const useAccountManager = () => {
   };
 
   const distributeFunds = async () => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.distributeFunds();
       await tx.wait();
@@ -80,6 +109,7 @@ const useAccountManager = () => {
   };
 
   const claimFunds = async () => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.claim();
       await tx.wait();
@@ -87,6 +117,7 @@ const useAccountManager = () => {
   };
 
   const distributeRemainingFunds = async () => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.distributeRemainingFunds();
       await tx.wait();
@@ -94,6 +125,7 @@ const useAccountManager = () => {
   };
 
   const setMessage = async (address: string, message: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const tx = await contract.setMessage(address, message);
       await tx.wait();
@@ -101,11 +133,32 @@ const useAccountManager = () => {
   };
 
   const getMessage = async (address: string) => {
+    const contract = await ensureContract();
     if (contract) {
       const message = await contract.getMessage(address);
       return message;
     }
     return null;
+  };
+
+  const getWhiteList = async () => {
+    const contract = await ensureContract();
+    if (contract) {
+      console.log('Fetching whitelist', contract);
+      const whiteListAddresses = await contract.getWhiteList();
+      return whiteListAddresses;
+    }
+    console.log('No contract found');
+    return [];
+  };
+
+  const getBlackList = async () => {
+    const contract = await ensureContract();
+    if (contract) {
+      const blackListAddresses = await contract.getBlackList();
+      return blackListAddresses;
+    }
+    return [];
   };
 
   return {
@@ -120,6 +173,8 @@ const useAccountManager = () => {
     distributeRemainingFunds,
     setMessage,
     getMessage,
+    getWhiteList,
+    getBlackList,
   };
 };
 
