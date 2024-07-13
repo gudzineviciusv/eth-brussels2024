@@ -4,13 +4,12 @@ import React from 'react';
 import { WagmiProvider, createConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
-import { sepolia } from 'wagmi/chains';
+import { sepolia, linea } from 'wagmi/chains';
 
 const config = createConfig(
     // @ts-ignore
   getDefaultConfig({
-    appName: 'ConnectKit CRA demo',
-    chains: [sepolia],
+    appName: 'ComeToMyFuneral',
   })
 );
 
