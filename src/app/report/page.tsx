@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
+import QRCodeComponent from '@/components/QRCodeComponent';
 
 // Temporary constants for testing
 const reportContractAddress = '0xYourReportContractAddressHere'; // Replace with your contract address
@@ -17,6 +18,14 @@ const reportContractABI = [
         "name": "balanceOf",
         "outputs": [{"name": "balance", "type": "uint256"}],
         "type": "function"
+    },
+    // Example function to get a specific address
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getSpecialAddress",
+        "outputs": [{"name": "", "type": "address"}],
+        "type": "function"
     }
 ];
 
@@ -25,6 +34,8 @@ const ReportPage: React.FC = () => {
     const [nftValid, setNftValid] = useState<boolean>(false);
     const [reporting, setReporting] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [reported, setReported] = useState<boolean>(false);
+    const [contractAddress, setContractAddress] = useState<string | null>(null);
 
     useEffect(() => {
         if (window.ethereum) {
@@ -32,6 +43,7 @@ const ReportPage: React.FC = () => {
                 .then((accounts: string[]) => {
                     setAccount(accounts[0]);
                     checkNft(accounts[0]);
+                    fetchContractAddress();
                 })
                 .catch((err: Error) => {
                     setError('Please connect your wallet.');
@@ -58,12 +70,25 @@ const ReportPage: React.FC = () => {
         }
     };
 
+    const fetchContractAddress = async () => {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const contract = new ethers.Contract(reportContractAddress, reportContractABI, provider);
+            const address = await contract.getSpecialAddress();
+            setContractAddress(address);
+        } catch (err) {
+            setError('Error fetching contract address.');
+            console.error(err);
+        }
+    };
+
     const handleReport = async () => {
         setReporting(true);
         try {
             // Add logic to handle the report process
             // This might include interacting with another contract method
             alert('Death reported successfully!');
+            setReported(true);
         } catch (err) {
             setError('Error reporting the death.');
             console.error(err);
@@ -81,9 +106,17 @@ const ReportPage: React.FC = () => {
                     <div className="wallet-info">
                         <p>Connected wallet: {account}</p>
                         {nftValid ? (
-                            <button onClick={handleReport} disabled={reporting}>
-                                {reporting ? 'Reporting...' : 'Report Death'}
-                            </button>
+                            <div>
+                                <button onClick={handleReport} disabled={reporting || reported}>
+                                    {reporting ? 'Reporting...' : 'Report Death'}
+                                </button>
+                                {reported && contractAddress && (
+                                    <div>
+                                        <QRCodeComponent text={`https://yourdomain.com/claim?walletAddress=${contractAddress}`} />
+                                        <p>Report successful! <a href={`/claim?walletAddress=${contractAddress}`}>Go to claim</a></p>
+                                    </div>
+                                )}
+                            </div>
                         ) : (
                             <p>No valid NFT found in your wallet.</p>
                         )}
