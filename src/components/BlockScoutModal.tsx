@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
 
 interface ModalProps {
   isOpen: boolean;
@@ -6,7 +7,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-  const [walletAddress, setWalletAddress] = useState('');
+  const { address: initialWalletAddress } = useAccount();
   const [isLoading, setIsLoading] = useState(false);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [modalWidth, setModalWidth] = useState<number | string>('sm:w-96');
@@ -26,10 +27,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }
   }, [transactions]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!walletAddress) return;
-
+  const fetchTransactions = async (walletAddress: string) => {
     setIsLoading(true);
 
     try {
@@ -48,45 +46,33 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  useEffect(() => {
+    if (isOpen && initialWalletAddress) {
+      fetchTransactions(initialWalletAddress);
+    }
+  }, [isOpen, initialWalletAddress]);
+
   return (
     isOpen && (
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className={`relative bg-gray-900 p-8 rounded-lg shadow-lg max-w-full ${modalWidth}`}>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div>
-              <input
-                type="text"
-                id="walletAddress"
-                value={walletAddress}
-                onChange={(e) => setWalletAddress(e.target.value)}
-                className="border border-gray-700 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-500 bg-gray-800 text-gray-300"
-                placeholder="Enter your wallet address"
-                disabled={isLoading}
-              />
-            </div>
-            <div className="flex justify-end space-x-4">
+          <div className="space-y-4">
+            <div className="flex justify-end">
               <button
                 type="button"
                 className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 onClick={onClose}
                 disabled={isLoading}
               >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className={`px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Loading...' : 'Submit'}
+                Close
               </button>
             </div>
-          </form>
+          </div>
 
           {transactions.length > 0 && (
             <div className="mt-4 max-h-96 overflow-y-auto">
-              <h3 className="text-lg font-bold mb-2 text-gray-300">Will Recipients</h3>
+              <h3 className="text-lg font-bold mb-2 text-gray-300">Wallet Transactions</h3>
               <div className="overflow-x-auto">
                 <table id="transactions-table" className="min-w-full bg-gray-800 border border-gray-700">
                   <thead>
