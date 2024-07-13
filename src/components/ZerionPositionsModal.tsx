@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 interface Position {
   token: string;
   balance: string;
+  icon: string;
 }
 
 interface ZerionPositionsModalProps {
@@ -35,6 +36,7 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
           setPositions(data.data.map((item: any) => ({
             token: item.attributes.fungible_info.symbol,
             balance: item.attributes.quantity.float.toString(),
+            icon: item.attributes.fungible_info.icon?.url || 'default-placeholder-url', // Use a default placeholder image URL
           })));
         } else {
           console.error('Failed to fetch positions:', data);
@@ -65,7 +67,7 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
         {!isLoading && (
           <>
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-            <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg max-w-full sm:w-96">
+            <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg max-w-full w-full sm:w-2/3 lg:w-1/2">
               <div className="space-y-4">
                 <div className="flex justify-end">
                   <button
@@ -86,13 +88,17 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
                     <table className="min-w-full bg-gray-800 border border-gray-700">
                       <thead>
                         <tr>
-                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Token</th>
-                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Balance</th>
+                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
+                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
+                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
                         </tr>
                       </thead>
                       <tbody>
                         {positions.map((position, index) => (
                           <tr key={index}>
+                            <td className="px-4 py-2 border-b border-gray-700 text-gray-300">
+                              <img src={position.icon} alt={position.token} className="w-6 h-6 inline-block" />
+                            </td>
                             <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{position.token}</td>
                             <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{position.balance}</td>
                           </tr>
