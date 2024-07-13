@@ -13,8 +13,8 @@ declare global {
 }
 
 // Temporary constants for testing
-const reportContractAddress = '0xYourReportContractAddressHere'; // Replace with your contract address
-const reportContractABI = [
+const claimContractAddress = '0xYourClaimContractAddressHere'; // Replace with your contract address
+const claimContractABI = [
     // Replace with your contract ABI
     // Example ABI:
     {
@@ -26,10 +26,10 @@ const reportContractABI = [
     }
 ];
 
-const ReportPage: React.FC = () => {
+const ClaimPage: React.FC = () => {
     const [account, setAccount] = useState<string | null>(null);
     const [nftValid, setNftValid] = useState<boolean>(false);
-    const [reporting, setReporting] = useState<boolean>(false);
+    const [claiming, setClaiming] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const ReportPage: React.FC = () => {
     const checkNft = async (account: string) => {
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(reportContractAddress, reportContractABI, provider);
+            const contract = new ethers.Contract(claimContractAddress, claimContractABI, provider);
             const balance = await contract.balanceOf(account);
             if (balance.gt(0)) {
                 setNftValid(true);
@@ -64,31 +64,31 @@ const ReportPage: React.FC = () => {
         }
     };
 
-    const handleReport = async () => {
-        setReporting(true);
+    const handleClaim = async () => {
+        setClaiming(true);
         try {
-            // Add logic to handle the report process
+            // Add logic to handle the claim process
             // This might include interacting with another contract method
-            alert('Death reported successfully!');
+            alert('Will claimed successfully!');
         } catch (err) {
-            setError('Error reporting the death.');
+            setError('Error claiming the will.');
             console.error(err);
         } finally {
-            setReporting(false);
+            setClaiming(false);
         }
     };
 
     return (
         <BackgroundWrapper>
-            <Header title={'Report a Death'} subtitle={'Please connect your wallet to report a death'} />
+            <Header title={'Claim Your Will'} subtitle={'Please connect your wallet to claim your will'} />
             <div className="content">
                 {error && <div className="error">{error}</div>}
                 {account && (
                     <div className="wallet-info">
                         <p>Connected wallet: {account}</p>
                         {nftValid ? (
-                            <button onClick={handleReport} disabled={reporting}>
-                                {reporting ? 'Reporting...' : 'Report Death'}
+                            <button onClick={handleClaim} disabled={claiming}>
+                                {claiming ? 'Claiming...' : 'Claim Will'}
                             </button>
                         ) : (
                             <p>No valid NFT found in your wallet.</p>
@@ -101,4 +101,4 @@ const ReportPage: React.FC = () => {
     );
 };
 
-export default ReportPage;
+export default ClaimPage;
