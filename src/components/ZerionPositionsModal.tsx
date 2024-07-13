@@ -86,13 +86,6 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
                   <h3 className="text-lg font-bold mb-2 text-gray-300">YOUR WILL</h3>
                   <div className="overflow-x-auto">
                     <table className="min-w-full bg-gray-800 border border-gray-700">
-                      <thead>
-                        <tr>
-                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
-                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
-                          <th className="px-4 py-2 border-b border-gray-700 text-gray-300"></th>
-                        </tr>
-                      </thead>
                       <tbody>
                         {positions.map((position, index) => (
                           <tr key={index}>
