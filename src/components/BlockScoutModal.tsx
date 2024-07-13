@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -8,7 +8,25 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [walletAddress, setWalletAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<any[]>([]); // Ensure transactions is properly typed
+  const [modalWidth, setModalWidth] = useState<number | string>('sm:w-96'); // Initial width
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      // Adjust modal width dynamically based on table content
+      const tableWidth = document.getElementById('transactions-table')?.offsetWidth || 0;
+      const adjustedWidth = Math.min(tableWidth + 64, 800); // Adjust max width as needed
+
+      if (tableWidth > 400) {
+        setModalWidth(`${adjustedWidth}px`);
+      } else {
+        setModalWidth('sm:w-96');
+      }
+    } else {
+      // Reset modal width when no transactions
+      setModalWidth('sm:w-96');
+    }
+  }, [transactions]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,9 +37,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     try {
       const response = await fetch(`https://eth.blockscout.com/api/v2/addresses/${walletAddress}/transactions?filter=to%20%7C%20from`);
       const data = await response.json();
-      console.log('API Response:', data);
 
-      setTransactions(data.items);
+      if (data && data.items) {
+        setTransactions(data.items);
+      }
+
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching transactions:', error);
@@ -32,8 +52,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="bg-gray-900 p-8 rounded-lg w-96 shadow-lg">
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div className={`relative bg-gray-900 p-8 rounded-lg shadow-lg max-w-full ${modalWidth}`}>
           <h2 className="text-xl font-bold mb-4 text-gray-300">Enter Wallet Address</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -70,24 +91,28 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </form>
 
           {transactions.length > 0 && (
-            <div className="mt-4">
+            <div className="mt-4 max-h-96 overflow-y-auto">
               <h3 className="text-lg font-bold mb-2 text-gray-300">Transactions</h3>
-              <table className="min-w-full bg-gray-800 border border-gray-700">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Date</th>
-                    <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Gas Price (Gwei)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((tx, index) => (
-                    <tr key={index}>
-                      <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{new Date(tx.timestamp).toLocaleString()}</td>
-                      <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{(tx.gas_price / 1e9).toFixed(2)}</td>
+              <div className="overflow-x-auto">
+                <table id="transactions-table" className="min-w-full bg-gray-800 border border-gray-700">
+                  <thead>
+                    <tr>
+                      <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Date</th>
+                      <th className="px-4 py-2 border-b border-gray-700 text-gray-300">To</th>
+                      <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Value (ETH)</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {transactions.map((tx, index) => (
+                      <tr key={index}>
+                        <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{new Date(tx.timestamp).toLocaleString()}</td>
+                        <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{tx.to.hash}</td>
+                        <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{(tx.value / 1e18).toFixed(4)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
