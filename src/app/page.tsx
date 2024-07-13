@@ -8,10 +8,8 @@ const queryClient = new QueryClient();
 
 export default function Home() {
   return (
-    <Web3Provider>
       <QueryClientProvider client={queryClient}> 
         <HomePage />
       </QueryClientProvider> 
-    </Web3Provider>
   );
 }
