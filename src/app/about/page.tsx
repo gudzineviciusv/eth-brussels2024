@@ -9,26 +9,10 @@ const About: React.FC = () => {
     return (
         <BackgroundWrapper>
             <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-                <h1 className="text-gray-700 text-4xl font-bold mb-10">Your Funeral Balance Moderator</h1>
+                <h1 className="text-gray-700 text-4xl font-bold mb-10">Come to my funeral</h1>
 
                 {/* Functionality and Photos Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-7xl">
-                    <div
-                        className="col-span-1 md:col-span-2 flex justify-center items-center bg-white rounded-lg shadow-md p-4">
-                        <img src="/team-photo.png" alt="Team Photo"
-                             className="object-cover rounded-lg shadow-md max-w-full h-auto"/>
-                    </div>
-
-                    {/* Team Section */}
-                    <div className="col-span-1 md:col-span-2 p-4 bg-white rounded-lg shadow-md">
-                        <h2 className="text-gray-700 text-xl font-bold mb-2">Team Description</h2>
-                        <p className="text-gray-700">
-                            Meet our amazing team! We are a group of dedicated professionals with a passion for
-                            innovation and blockchain technology.
-                            Our goal is to make sure your financial legacy is secure and properly managed even after you
-                            are no longer around.
-                        </p>
-                    </div>
 
                     {/* Functionality Block 1 */}
                     <div className="col-span-1 flex justify-center items-center bg-white rounded-lg shadow-md p-4">
@@ -129,6 +113,21 @@ const About: React.FC = () => {
                     <div className="col-span-1 flex justify-center items-center bg-white rounded-lg shadow-md p-4">
                         <img src="/final.png" alt="Functionality 6 Photo"
                              className="object-cover rounded-lg shadow-md max-w-full h-auto"/>
+                    </div>
+                    <div
+                        className="col-span-1 md:col-span-2 flex justify-center items-center bg-white rounded-lg shadow-md p-4">
+                        <img src="/team.png" alt="Team Photo"
+                             className="object-cover rounded-lg shadow-md max-w-full h-auto"/>
+                    </div>
+                    {/* Team Section */}
+                    <div className="col-span-1 md:col-span-2 p-4 bg-white rounded-lg shadow-md">
+                        <h2 className="text-gray-700 text-xl font-bold mb-2">Team!</h2>
+                        <p className="text-gray-700">
+                            Meet our amazing team! We are a group of dedicated professionals with a passion for
+                            innovation and blockchain technology.
+                            Our goal is to make sure your financial legacy is secure and properly managed even after you
+                            are no longer around.
+                        </p>
                     </div>
                 </div>
             </div>
