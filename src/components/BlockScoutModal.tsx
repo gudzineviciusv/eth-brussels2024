@@ -8,14 +8,13 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [walletAddress, setWalletAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [transactions, setTransactions] = useState<any[]>([]); // Ensure transactions is properly typed
-  const [modalWidth, setModalWidth] = useState<number | string>('sm:w-96'); // Initial width
+  const [transactions, setTransactions] = useState<any[]>([]);
+  const [modalWidth, setModalWidth] = useState<number | string>('sm:w-96');
 
   useEffect(() => {
     if (transactions.length > 0) {
-      // Adjust modal width dynamically based on table content
       const tableWidth = document.getElementById('transactions-table')?.offsetWidth || 0;
-      const adjustedWidth = Math.min(tableWidth + 64, 800); // Adjust max width as needed
+      const adjustedWidth = Math.min(tableWidth + 64, 800);
 
       if (tableWidth > 400) {
         setModalWidth(`${adjustedWidth}px`);
@@ -23,7 +22,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         setModalWidth('sm:w-96');
       }
     } else {
-      // Reset modal width when no transactions
       setModalWidth('sm:w-96');
     }
   }, [transactions]);
