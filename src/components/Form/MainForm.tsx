@@ -8,8 +8,8 @@ import usePinataUpload from '@/hooks/usePinataUpload';
 import ImageUpload from './Inputs/ImageUpload';
 import TitleInput from './Inputs/TitleInput';
 import DescriptionInput from './Inputs/DescriptionalInput';
-import WhitelistInput from "@/components/Form/Inputs/WhiteListInput";
-import BlackListInput from "@/components/Form/Inputs/BlackListInput";
+import WhitelistInput from "@/components/Form/Inputs/WhitelistInput";
+import BlacklistInput from "@/components/Form/Inputs/BlacklistInput";
 import FuneralAdminInput from "@/components/Form/Inputs/FuneralAdminInput";
 
 const MintNFTForm: React.FC = () => {
@@ -67,55 +67,50 @@ const MintNFTForm: React.FC = () => {
 
   return (
       <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-lg shadow-lg">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-300">Create Your Unique NFT</h2>
-          <p className="text-gray-400">
-            Fill in the details below to mint your NFT. Ensure that you provide a unique title, a detailed description,
-            and upload an image that represents your NFT. Additionally, you can specify a funeral admin, whitelist
-            addresses,
-            and blacklist addresses for enhanced control over your NFT.
-          </p>
-        </div>
-        <ImageUpload selectedImage={selectedImage} onImageChange={handleImageChange}/>
-        {uploadError && <p className="text-red-500">{uploadError}</p>}
-        {mintError && <p className="text-red-500">{mintError}</p>}
-        <TitleInput title={title} onTitleChange={(e) => setTitle(e.target.value)}/>
-        <DescriptionInput description={description} onDescriptionChange={(e) => setDescription(e.target.value)}/>
-        <FuneralAdminInput publicAddress={funeralAdminPublicAddress}
-                           onPublicAddressChange={(e) => setFuneralAdminPublicAddress(e.target.value)}/>
-        <WhitelistInput whitelist={whitelistAddresses}
-                        onWhitelistChange={(e) => setWhitelistAddresses(e.target.value)}/>
-        <BlackListInput blacklist={blacklistAddresses}
-                        onBlackListChange={(e) => setBlacklistAddresses(e.target.value)}/>
 
-        <div className="flex justify-between space-x-4">
-          <button
-              className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-              onClick={handleUpload}
-              disabled={isUploading || isMinting}
-          >
-            {isUploading || isMinting ? <Loader/> : 'Mint without listing'}
-          </button>
-          <button
-              className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-              onClick={handleUpload}
-              disabled={isUploading || isMinting}
-          >
-            {isUploading || isMinting ? <Loader/> : 'Mint and list immediately'}
-          </button>
-        </div>
+          <ImageUpload selectedImage={selectedImage} onImageChange={handleImageChange}/>
+          {uploadError && <p className="text-red-500">{uploadError}</p>}
+          {mintError && <p className="text-red-500">{mintError}</p>}
+          <div className="mb-6 text-center">
+              <h2 className="text-lg font-semibold text-gray-300">You Funeral NFT Information</h2>
+          </div>
+          <TitleInput title={title} onTitleChange={(e) => setTitle(e.target.value)}/>
+          <DescriptionInput description={description} onDescriptionChange={(e) => setDescription(e.target.value)}/>
+          <FuneralAdminInput publicAddress={funeralAdminPublicAddress}
+                             onPublicAddressChange={(e) => setFuneralAdminPublicAddress(e.target.value)}/>
+          <WhitelistInput whitelist={whitelistAddresses}
+                          onWhitelistChange={(e) => setWhitelistAddresses(e.target.value)}/>
+          <BlacklistInput blacklist={blacklistAddresses}
+                          onBlackListChange={(e) => setBlacklistAddresses(e.target.value)}/>
 
-        <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            title={title}
-            description={description}
-            imageUrl={selectedImage ? URL.createObjectURL(selectedImage) : ''}
-            actionText="Continue"
-            onAction={handleMint}
-            isMinting={isMinting}
-            transactionHash={transactionHash}
-        />
+          <div className="flex justify-between space-x-4">
+              <button
+                  className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  onClick={handleUpload}
+                  disabled={isUploading || isMinting}
+              >
+                  {isUploading || isMinting ? <Loader/> : 'Mint without listing'}
+              </button>
+              <button
+                  className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  onClick={handleUpload}
+                  disabled={isUploading || isMinting}
+              >
+                  {isUploading || isMinting ? <Loader/> : 'Mint and list immediately'}
+              </button>
+          </div>
+
+          <Modal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              title={title}
+              description={description}
+              imageUrl={selectedImage ? URL.createObjectURL(selectedImage) : ''}
+              actionText="Continue"
+              onAction={handleMint}
+              isMinting={isMinting}
+              transactionHash={transactionHash}
+          />
       </div>
   );
 };
