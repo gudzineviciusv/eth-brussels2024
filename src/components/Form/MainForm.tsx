@@ -29,7 +29,7 @@ const MintNFTForm: React.FC = () => {
 
   const { mintNFT, isMinting, mintError } = useMintNFT(contractAddress, abi.abi);
   const { uploadToPinata, isUploading, uploadError } = usePinataUpload();
-  const { addToWhiteList, addToBlackList, setAdministratorAccount, getWhiteList } = useAccountManager();
+  const { addToWhiteList, addToBlackList, setAdministratorAccount } = useAccountManager();
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
