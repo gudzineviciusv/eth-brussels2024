@@ -1,15 +1,17 @@
-"use client"
-import { Web3Provider } from "@/components/wrappers/Web3Provider";
-import HomePage from "@/pages/home";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import './globals.css';
+import Footer from '@/components/Footer';
+import MintNFTForm from '@/components/Form/MainForm';
+import Header from '@/components/Header';
+import BackgroundComponent from '@/components/wrappers/BackgroundWrapper';
+import React from 'react';
 
-const queryClient = new QueryClient();
-
-export default function Home() {
-  return (
-      <QueryClientProvider client={queryClient}> 
-        <HomePage />
-      </QueryClientProvider> 
-  );
+const HomePage: React.FC = () => {
+    return (
+    <BackgroundComponent>
+        <Header title={'Mint New NFT'} subtitle={'tbd'} />
+        <MintNFTForm />
+        <Footer />
+    </BackgroundComponent>
+    );
 }
+
+export default HomePage;

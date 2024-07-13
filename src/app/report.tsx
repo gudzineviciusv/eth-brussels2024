@@ -1,13 +1,13 @@
 import Footer from '@/components/Footer';
 import MintNFTForm from '@/components/Form/MainForm';
-import MainHeaderBox from '@/components/MainHeaderBox';
+import Header from '@/components/Header';
 import BackgroundComponent from '@/components/wrappers/BackgroundWrapper';
 import React from 'react';
 
 const HomePage: React.FC = () => {
     return (
     <BackgroundComponent>
-        <MainHeaderBox />
+        <Header title={'test'} subtitle={'test'} />
         <MintNFTForm />
         <Footer />
     </BackgroundComponent>
