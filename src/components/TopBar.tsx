@@ -32,13 +32,13 @@ const TopBar = () => {
         className="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg mr-4"
         onClick={openModal}
       >
-        Check Wallet (BlockScout)
+        Check Inheritors List (BlockScout)
       </button>
       <button
         className="bg-gradient-to-r from-blue-500 to-pink-500 text-white px-4 py-2 rounded-lg"
         onClick={handleCheckWallet}
       >
-        Check Wallet (Zerion)
+        Check Your Crypto Will (Zerion)
       </button>
       <div className="flex justify-end items-start">
         <div className="px-8 py-4">
