@@ -49,6 +49,7 @@ const ClaimPage: React.FC = () => {
     }, []);
 
     const checkNft = async (account: string) => {
+        if (!account) return;
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const contract = new ethers.Contract(claimContractAddress, claimContractABI, provider);

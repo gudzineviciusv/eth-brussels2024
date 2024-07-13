@@ -22,7 +22,7 @@ const useAccountManager = () => {
     }[chainId || 1];
 
   useEffect(() => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (typeof window.ethereum !== 'undefined' && contractAddress) {
       const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(web3Provider);
 
