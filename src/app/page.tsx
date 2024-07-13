@@ -7,7 +7,7 @@ import React from 'react';
 const HomePage: React.FC = () => {
     return (
     <BackgroundComponent>
-        <Header title={'Mint New NFT'} subtitle={'tbd'} />
+        <Header title={'Leave your crypto lagacy'} subtitle={'tbd'} />
         <MintNFTForm />
         <Footer />
     </BackgroundComponent>

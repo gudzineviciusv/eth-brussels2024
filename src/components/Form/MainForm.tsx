@@ -91,14 +91,7 @@ const MintNFTForm: React.FC = () => {
                   onClick={handleUpload}
                   disabled={isUploading || isMinting}
               >
-                  {isUploading || isMinting ? <Loader/> : 'Mint without listing'}
-              </button>
-              <button
-                  className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-                  onClick={handleUpload}
-                  disabled={isUploading || isMinting}
-              >
-                  {isUploading || isMinting ? <Loader/> : 'Mint and list immediately'}
+                  {isUploading || isMinting ? <Loader/> : 'Create your death wish'}
               </button>
           </div>
 

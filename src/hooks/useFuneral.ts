@@ -1,12 +1,25 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import AccountManagerABI from '../web3/abi/ComeToMyFuneral.json';
+import { useAccount } from 'wagmi';
+import {  arbitrumSepolia, lineaTestnet } from 'wagmi/chains';
+import { incoNetwork, zircuitTestnet } from '@/components/wrappers/Web3Provider';
 
-const useAccountManager = (contractAddress: string) => {
+
+const useAccountManager = () => {
   const [provider, setProvider] = useState<ethers.providers.Web3Provider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [account, setAccount] = useState<string | null>(null);
+
+  const { chainId } = useAccount();
+
+  const contractAddress = {
+    [arbitrumSepolia.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5', //add supportedAccount
+    [lineaTestnet.id]: '0xCC03f54E4A9D73331B9bC1cAc192cF89BB957472',
+    [incoNetwork.id]: '0x',
+    [zircuitTestnet.id]: '0x',
+    }[chainId || 1];
 
   useEffect(() => {
     if (typeof window.ethereum !== 'undefined') {
@@ -19,7 +32,7 @@ const useAccountManager = (contractAddress: string) => {
 
       setSigner(web3Provider.getSigner());
 
-      const accountManagerContract = new ethers.Contract(contractAddress, AccountManagerABI, web3Provider.getSigner());
+      const accountManagerContract = new ethers.Contract(contractAddress!, AccountManagerABI, web3Provider.getSigner());
       setContract(accountManagerContract);
     }
   }, [contractAddress]);

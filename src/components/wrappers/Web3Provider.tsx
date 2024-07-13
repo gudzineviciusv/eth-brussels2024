@@ -4,7 +4,7 @@ import React from 'react';
 import { WagmiProvider, createConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
-import {  arbitrumNova, lineaTestnet } from 'wagmi/chains';
+import {  arbitrumSepolia, lineaTestnet } from 'wagmi/chains';
 import { defineChain } from 'viem';
 
 
@@ -58,7 +58,7 @@ const config = createConfig(
     // @ts-ignore
   getDefaultConfig({
     appName: 'ComeToMyFuneral',
-    chains: [ lineaTestnet, arbitrumNova, zircuitTestnet, incoNetwork],
+    chains: [ lineaTestnet, arbitrumSepolia, zircuitTestnet, incoNetwork],
   })
 );
 
