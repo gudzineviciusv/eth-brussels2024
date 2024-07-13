@@ -55,12 +55,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       <div className="fixed inset-0 flex items-center justify-center z-50">
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className={`relative bg-gray-900 p-8 rounded-lg shadow-lg max-w-full ${modalWidth}`}>
-          <h2 className="text-xl font-bold mb-4 text-gray-300">Enter Wallet Address</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="walletAddress" className="block text-gray-400 font-bold">
-                Wallet Address
-              </label>
               <input
                 type="text"
                 id="walletAddress"
@@ -92,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
           {transactions.length > 0 && (
             <div className="mt-4 max-h-96 overflow-y-auto">
-              <h3 className="text-lg font-bold mb-2 text-gray-300">Transactions</h3>
+              <h3 className="text-lg font-bold mb-2 text-gray-300">Will Recipients</h3>
               <div className="overflow-x-auto">
                 <table id="transactions-table" className="min-w-full bg-gray-800 border border-gray-700">
                   <thead>
