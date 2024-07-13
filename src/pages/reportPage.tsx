@@ -4,7 +4,7 @@ import MainHeaderBox from '@/components/MainHeaderBox';
 import BackgroundComponent from '@/components/wrappers/BackgroundWrapper';
 import React from 'react';
 
-const RaportPage: React.FC = () => {
+const ReportPage: React.FC = () => {
     return (
     <BackgroundComponent>
         <MainHeaderBox />
@@ -14,4 +14,4 @@ const RaportPage: React.FC = () => {
     );
 }
 
-export default RaportPage;
+export default ReportPage;

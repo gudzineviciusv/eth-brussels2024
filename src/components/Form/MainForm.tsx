@@ -66,7 +66,7 @@ const MintNFTForm: React.FC = () => {
   };
 
   return (
-      <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-lg shadow-lg">
+      <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-lg shadow-lg bg-opacity-85">
 
           <ImageUpload selectedImage={selectedImage} onImageChange={handleImageChange}/>
           {uploadError && <p className="text-red-500">{uploadError}</p>}

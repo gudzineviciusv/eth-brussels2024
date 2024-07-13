@@ -1,10 +1,8 @@
 "use client"
-import RaportPage from "@/pages/reportPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ReportPage from "@/pages/reportPage";
 
-
-export default function Raport() {
+export default function Report() {
   return (
-        <RaportPage />
+        <ReportPage />
   );
 }
