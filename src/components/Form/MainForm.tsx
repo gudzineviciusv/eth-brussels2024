@@ -37,19 +37,6 @@ const MintNFTForm: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchWhiteList = async () => {
-      try {
-        const whitelist = await getWhiteList();
-        console.log(whitelist); // Log the retrieved whitelist
-      } catch (error) {
-        console.error('Error fetching whitelist:', error);
-      }
-    };
-
-    fetchWhiteList();
-  }, []);
-
   const handleUpload = async () => {
     if (!selectedImage || !title || !description) return;
 
