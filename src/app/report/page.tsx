@@ -6,12 +6,6 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 
-declare global {
-    interface Window {
-        ethereum: any;
-    }
-}
-
 // Temporary constants for testing
 const reportContractAddress = '0xYourReportContractAddressHere'; // Replace with your contract address
 const reportContractABI = [
