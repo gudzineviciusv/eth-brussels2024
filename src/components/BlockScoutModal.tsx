@@ -80,9 +80,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
               {transactions.length > 0 && (
                 <div className="mt-4 max-h-96 overflow-y-auto">
-                  <h3 className="text-lg font-bold mb-2 text-gray-300">Wallet Transactions</h3>
+                  <h3 className="text-lg font-bold mb-2 text-gray-300">Will Receivers</h3>
                   <div className="overflow-x-auto">
-                    <table id="transactions-table" className="min-w-full bg-gray-800 border border-gray-700">
+                    <table id="transactions-table" className="min-w-full bg-gray-800 border border-gray-700 opacity-40 rounded-lg">
                       <thead>
                         <tr>
                           <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Date</th>
