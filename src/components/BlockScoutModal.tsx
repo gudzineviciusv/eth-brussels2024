@@ -19,12 +19,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     try {
       const response = await fetch(`https://eth.blockscout.com/api/v2/addresses/${walletAddress}/transactions?filter=to%20%7C%20from`);
       const data = await response.json();
-      console.log('API Response:', data); // Log the API response in console
+      console.log('API Response:', data);
 
-      // Update the transactions state with the fetched data
       setTransactions(data.items);
       setIsLoading(false);
-      // onClose(); // Optionally close modal after successful submission
     } catch (error) {
       console.error('Error fetching transactions:', error);
       alert('Failed to fetch transactions. Please check the console for more details.');
@@ -35,11 +33,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   return (
     isOpen && (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="bg-white p-8 rounded-lg w-96">
-          <h2 className="text-xl font-bold mb-4">Enter Wallet Address</h2>
+        <div className="bg-gray-900 p-8 rounded-lg w-96 shadow-lg">
+          <h2 className="text-xl font-bold mb-4 text-gray-300">Enter Wallet Address</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="walletAddress" className="block text-gray-700 font-bold">
+              <label htmlFor="walletAddress" className="block text-gray-400 font-bold">
                 Wallet Address
               </label>
               <input
@@ -47,15 +45,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 id="walletAddress"
                 value={walletAddress}
                 onChange={(e) => setWalletAddress(e.target.value)}
-                className="border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-500"
+                className="border border-gray-700 rounded px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-500 bg-gray-800 text-gray-300"
                 placeholder="Enter your wallet address"
-                disabled={isLoading} // Disable input while loading
+                disabled={isLoading}
               />
             </div>
             <div className="flex justify-end space-x-4">
               <button
                 type="button"
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
                 onClick={onClose}
                 disabled={isLoading}
               >
@@ -63,7 +61,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </button>
               <button
                 type="submit"
-                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={isLoading}
               >
                 {isLoading ? 'Loading...' : 'Submit'}
@@ -73,19 +71,19 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
           {transactions.length > 0 && (
             <div className="mt-4">
-              <h3 className="text-lg font-bold mb-2">Transactions</h3>
-              <table className="min-w-full bg-white border border-gray-300">
+              <h3 className="text-lg font-bold mb-2 text-gray-300">Transactions</h3>
+              <table className="min-w-full bg-gray-800 border border-gray-700">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 border-b">Date</th>
-                    <th className="px-4 py-2 border-b">Gas Price (Gwei)</th>
+                    <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Date</th>
+                    <th className="px-4 py-2 border-b border-gray-700 text-gray-300">Gas Price (Gwei)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {transactions.map((tx, index) => (
                     <tr key={index}>
-                      <td className="px-4 py-2 border-b">{new Date(tx.timestamp).toLocaleString()}</td>
-                      <td className="px-4 py-2 border-b">{(tx.gas_price / 1e9).toFixed(2)}</td>
+                      <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{new Date(tx.timestamp).toLocaleString()}</td>
+                      <td className="px-4 py-2 border-b border-gray-700 text-gray-300">{(tx.gas_price / 1e9).toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
