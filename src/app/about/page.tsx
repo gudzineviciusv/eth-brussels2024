@@ -32,7 +32,7 @@ const About: React.FC = () => {
 
                     {/* Functionality Block 1 */}
                     <div className="col-span-1 flex justify-center items-center bg-white rounded-lg shadow-md p-4">
-                        <img src="/deadmoderator.png" alt="Functionality 1 Photo"
+                        <img src="/moderator.png" alt="Functionality 1 Photo"
                              className="object-cover rounded-lg shadow-md max-w-full h-auto"/>
                     </div>
                     <div className="col-span-1 p-4 bg-white rounded-lg shadow-md">
@@ -40,10 +40,7 @@ const About: React.FC = () => {
                         <p className="text-gray-700">
                             Choose a trusted friend or family member to act as your "Dead Moderator." This person has
                             the
-                            solemn duty of confirming your departure from this world. Select your trusted ‘Dead
-                            Moderator’ —
-                            because nothing says ‘I trust you’ like assigning someone to declare you officially
-                            deceased.
+                            solemn duty of confirming your departure from this world.
                             This chosen one will trigger a smart contract that sets off the chain of events ensuring
                             your
                             financial legacy is handled. Think of it as giving someone the keys to your posthumous
@@ -55,10 +52,7 @@ const About: React.FC = () => {
                     <div className="col-span-1 p-4 bg-white rounded-lg shadow-md">
                         <h2 className="text-gray-700 text-xl font-bold mb-2">Triggering the Death Announcement</h2>
                         <p className="text-gray-700">
-                            Upon your death, the "Dead Moderator" activates a smart contract that informs the blockchain
-                            and
-                            your designated recipients. When you kick the bucket, your ‘Dead Moderator’ will press the
-                            big red
+                            When you kick the bucket, your ‘Dead Moderator’ will press the big red
                             button—well, it’s not actually red, but you get the idea. This triggers a smart contract
                             that spreads
                             the word (on the blockchain) that you've shuffled off this mortal coil. No telegrams needed
