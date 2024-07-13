@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, ChangeEvent } from 'react';
 import { ethers } from 'ethers';
 import { abi, contractAddress } from '@/web3/contract';
