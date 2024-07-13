@@ -16,10 +16,12 @@ const TopBar = () => {
             >
                 Check Wallet
             </button>
-            {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal}/>}
-            {/*<div className="flex justify-end items-start px-8 py-4 w-full fixed top-0 right-0">*/}
-            {/*    <ConnectKitButton/>*/}
-            {/*</div>*/}
+            <div className="flex justify-end items-start">
+                <div className="px-8 py-4">
+                    <ConnectKitButton />
+                </div>
+            </div>
+            {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal} />}
         </div>
     );
 };
