@@ -27,10 +27,15 @@ const TopBar = () => {
     ];
 
     return (
-        <div className="flex items-center justify-between px-8 w-full py-4">
-            <div className="flex items-center">
+        <div className="flex items-center justify-between px-8 w-full py-4 bg-black relative">
+            <div className="flex items-center relative">
                 <Link href="/" passHref>
                     <img src="/logo.png" alt="Logo" className="h-12 w-12 mr-4 cursor-pointer" />
+                </Link>
+                <Link href="/about" passHref>
+                    <div className="left-12 top-1/2 transform -translate-y-1/2 bg-white text-black text-xs p-2 rounded-lg shadow-md cursor-pointer">
+                        Hey, learn more about how it works
+                    </div>
                 </Link>
             </div>
             <div className="flex-grow flex justify-center space-x-8">
@@ -39,7 +44,7 @@ const TopBar = () => {
                         <Link href={item.href} passHref>
                             <img src={item.src} alt={item.alt} className="h-8 w-8 cursor-pointer mb-1" />
                         </Link>
-                        <span className="text-xs text-gray-700">{item.description}</span>
+                        <span className="text-xs text-gray-300">{item.description}</span>
                     </div>
                 ))}
             </div>

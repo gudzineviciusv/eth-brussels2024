@@ -37,7 +37,6 @@ const HomePage: React.FC = () => {
 
     return (
         <BackgroundComponent>
-            <Header title={'Leave your crypto legacy'} subtitle={'Learn how it works bellow:'} />
             <ContentWrapper>
                 <button className="image-button" onClick={handleCheckWallet}>
                     <img src="assets/crypto-will-image.png" alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
