@@ -24,7 +24,7 @@ const ClaimPage: React.FC = () => {
                     checkStatus(accounts[0]);
                 })
                 .catch((err: Error) => {
-                    setError('Please connect your wallet.');
+                    setError('Claim assesst that you inherited');
                     console.error(err);
                 });
         } else {
@@ -38,26 +38,26 @@ const ClaimPage: React.FC = () => {
         setIsInBlacklist(false);
         setIsInWhitelist(true);
 
-        // try {
-        //     const message = await getMessage(account);
-        //     setMessage(message);
+        try {
+            const message = await getMessage(account);
+            setMessage(message);
 
-        //     const whiteList = await getWhiteList();
-        //     const blackList = await getBlackList();
+            const whiteList = await getWhiteList();
+            const blackList = await getBlackList();
 
-        //     if (blackList.includes(account)) {
-        //         setIsInBlacklist(true);
-        //         setIsInWhitelist(false);
-        //     } else if (whiteList.includes(account)) {
-        //         setIsInWhitelist(true);
-        //         setIsInBlacklist(false);
-        //     } else {
-        //         setError('Account is neither in whitelist nor in blacklist.');
-        //     }
-        // } catch (err) {
-        //     setError('Error checking status.');
-        //     console.error(err);
-        // }
+            if (blackList.includes(account)) {
+                setIsInBlacklist(true);
+                setIsInWhitelist(false);
+            } else if (whiteList.includes(account)) {
+                setIsInWhitelist(true);
+                setIsInBlacklist(false);
+            } else {
+                setError('Account is neither in whitelist nor in blacklist.');
+            }
+        } catch (err) {
+            setError('Error checking status.');
+            console.error(err);
+        }
     };
 
     const handleClaim = async () => {
@@ -75,7 +75,7 @@ const ClaimPage: React.FC = () => {
 
     return (
         <BackgroundWrapper>
-            <Header title={'Claim Your Will'} subtitle={'Please connect your wallet to claim your will'} />
+            <Header title={'Claim Your Will'} subtitle={'Check if you inherited something'} />
             <div className="content">
                 {error && <div className="error">{error}</div>}
                 {account && (
