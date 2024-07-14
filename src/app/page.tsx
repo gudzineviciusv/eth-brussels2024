@@ -5,8 +5,6 @@ import BackgroundComponent from '@/components/wrappers/BackgroundWrapper';
 import Header from '@/components/Header';
 import MintNFTForm from '@/components/Form/MainForm';
 import Footer from '@/components/Footer';
-import CryptoWillButton from '@/components/CryptoWillButton';
-import InheritorsListButton from '@/components/InheritorsListButton';
 import Modal from '@/components/BlockScoutModal';
 import ZerionPositionsModal from '@/components/ZerionPositionsModal';
 import { useAccount } from 'wagmi';
@@ -38,11 +36,13 @@ const HomePage: React.FC = () => {
 
     return (
         <BackgroundComponent>
-            <Header title={'Leave your crypto legacy'} subtitle={'tbd'} />
-            <div className="flex justify-between items-start">
+            <Header title={'Leave your crypto legacy'} subtitle={'Learn how it works bellow:'} />
+            <div className="flex justify-between items-start main-page-wrapper">
                 <button className="image-button" onClick={handleCheckWallet}>
                     <img src={cryptoWillImage.src} alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
+                    <div>Treasury</div>
                 </button>
+
 
                 <div className="w-full md:w-3/4 lg:w-1/2 px-20 py-8">
                     <MintNFTForm />
@@ -50,6 +50,7 @@ const HomePage: React.FC = () => {
 
                 <button className="image-button" onClick={openModal}>
                     <img src={inheritorsListImage.src} alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
+                    <div>Recent transactions</div>
                 </button>
             </div>
 

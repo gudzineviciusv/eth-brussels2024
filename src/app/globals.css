@@ -31,3 +31,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.main-page-wrapper button {
+  min-width: 300px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}

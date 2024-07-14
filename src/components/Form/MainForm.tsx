@@ -15,6 +15,8 @@ import BlacklistInput from "@/components/Form/Inputs/BlacklistInput";
 import FuneralAdminInput from "@/components/Form/Inputs/FuneralAdminInput";
 import useAccountManager from '@/hooks/useFuneral';
 
+import './MainForm.scss';
+
 const MintNFTForm: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [title, setTitle] = useState<string>('');
@@ -90,7 +92,7 @@ const MintNFTForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-lg shadow-lg bg-opacity-85">
+    <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-lg shadow-lg bg-opacity-85 MainForm">
       {currentStep === 1 && (
         <>
           <ImageUpload selectedImage={selectedImage} onImageChange={handleImageChange}/>
