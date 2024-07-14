@@ -8,6 +8,7 @@ import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import QRCodeComponent from '@/components/QRCodeComponent';
 import useAccountManager from '@/hooks/useFuneral';
 import AccountManagerABI from '@/web3/abi/ComeToMyFuneral.json';
+import ContentWrapper from '@/components/wrappers/ContentWrapper';
 
 const reportContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
 
@@ -95,7 +96,7 @@ const ReportPage: React.FC = () => {
     return (
         <BackgroundWrapper>
             <Header title={'Report a Death'} subtitle={'Please connect your wallet to report a death'} />
-            <div className="flex justify-center items-center min-h-screen">
+            <ContentWrapper>
                 <div className="bg-gray-900 p-8 rounded-lg shadow-lg max-w-md w-full">
                     {error && <div className="text-red-500 mb-4">{error}</div>}
                     {account && (
@@ -128,7 +129,7 @@ const ReportPage: React.FC = () => {
                         </div>
                     )}
                 </div>
-            </div>
+            </ContentWrapper>
             <Footer />
         </BackgroundWrapper>
     );

@@ -11,6 +11,7 @@ import { useAccount } from 'wagmi';
 
 import cryptoWillImage from '/public/assets/crypto-will-image.png';
 import inheritorsListImage from '/public/assets/inheritors-list-image.png';
+import ContentWrapper from '@/components/wrappers/ContentWrapper';
 
 const HomePage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,22 +38,21 @@ const HomePage: React.FC = () => {
     return (
         <BackgroundComponent>
             <Header title={'Leave your crypto legacy'} subtitle={'Learn how it works bellow:'} />
-            <div className="flex justify-between items-start main-page-wrapper">
+            <ContentWrapper>
                 <button className="image-button" onClick={handleCheckWallet}>
-                    <img src={cryptoWillImage.src} alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
+                    <img src="/path/to/crypto-will-image.png" alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
                     <div>Treasury</div>
                 </button>
-
 
                 <div className="w-full md:w-3/4 lg:w-1/2 px-20 py-8">
                     <MintNFTForm />
                 </div>
 
                 <button className="image-button" onClick={openModal}>
-                    <img src={inheritorsListImage.src} alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
+                    <img src="/path/to/inheritors-list-image.png" alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
                     <div>Recent transactions</div>
                 </button>
-            </div>
+            </ContentWrapper>
 
             {/* Modals */}
             {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal} />}

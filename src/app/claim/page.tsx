@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import useAccountManager from '@/hooks/useFuneral';
+import ContentWrapper from '@/components/wrappers/ContentWrapper';
 
 const ClaimPage: React.FC = () => {
     const [account, setAccount] = useState<string | null>(null);
@@ -76,7 +77,7 @@ const ClaimPage: React.FC = () => {
     return (
         <BackgroundWrapper>
             <Header title={'Claim Your Will'} subtitle={'Check if you inherited something'} />
-            <div className="content">
+            <ContentWrapper>
                 {error && <div className="error">{error}</div>}
                 {account && (
                     <div className="wallet-info">
@@ -90,7 +91,7 @@ const ClaimPage: React.FC = () => {
                         {isInBlacklist && <p>You are in the blacklist and cannot claim the will.</p>}
                     </div>
                 )}
-            </div>
+            </ContentWrapper>
             <Footer />
         </BackgroundWrapper>
     );
