@@ -111,11 +111,12 @@ const ReportPage: React.FC = () => {
                                     {reporting ? 'Reporting...' : 'Report Death'}
                                 </button>
                                 {reported && (
-                                    <div>
-                                        <QRCodeComponent text={qrLink} />
+                                    <div className="flex flex-col items-center justify-center">
+                                        <QRCodeComponent text={qrLink}/>
                                         <p className="mt-4 text-center">
                                             Report successful!{' '}
-                                            <a href={`/claim?walletAddress=${account}`} className="text-purple-500 underline">
+                                            <a href={`/claim?walletAddress=${account}`}
+                                               className="text-purple-500 underline">
                                                 Go to claim
                                             </a>
                                         </p>
