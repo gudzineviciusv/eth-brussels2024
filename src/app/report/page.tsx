@@ -8,8 +8,6 @@ import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import QRCodeComponent from '@/components/QRCodeComponent';
 import useAccountManager from '@/hooks/useFuneral';
 import AccountManagerABI from '@/web3/abi/ComeToMyFuneral.json';
-import { useAccount } from 'wagmi';
-import './report.scss'; // Import the SCSS file
 
 const reportContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
 
