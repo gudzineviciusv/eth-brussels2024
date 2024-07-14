@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
             <Header title={'Leave your crypto legacy'} subtitle={'Learn how it works bellow:'} />
             <ContentWrapper>
                 <button className="image-button" onClick={handleCheckWallet}>
-                    <img src="/path/to/crypto-will-image.png" alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
+                    <img src="assets/crypto-will-image.png" alt="Crypto Will" style={{ width: '250px', height: 'auto' }} />
                     <div>Treasury</div>
                 </button>
 
@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <button className="image-button" onClick={openModal}>
-                    <img src="/path/to/inheritors-list-image.png" alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
+                    <img src="assets/inheritors-list-image.png" alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
                     <div>Recent transactions</div>
                 </button>
             </ContentWrapper>
