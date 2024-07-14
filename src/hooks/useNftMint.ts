@@ -5,13 +5,13 @@ const useMintNFT = (contractAddress: string, abi: any) => {
   const [isMinting, setIsMinting] = useState<boolean>(false);
   const [mintError, setMintError] = useState<string | null>(null);
 
-  const mintNFT = async (metadataURI: string, signer: ethers.Signer) => {
+  const mintNFT = async (recipientAddress: string, metadataURI: string, signer: ethers.Signer) => {
     setMintError(null);
 
     try {
       setIsMinting(true);
       const contract = new ethers.Contract(contractAddress, abi, signer);
-      const transaction = await contract.mint(await signer.getAddress(), metadataURI);
+      const transaction = await contract.mint(recipientAddress, metadataURI);
       await transaction.wait();
 
       setIsMinting(false);

@@ -16,8 +16,8 @@ const useAccountManager = () => {
   const contractAddress = {
     [arbitrumSepolia.id]: '0xC4b46eE0533625Dad498d632f068c795Fa9bF5be',
     [lineaTestnet.id]: '0xCC03f54E4A9D73331B9bC1cAc192cF89BB957472',
-    [incoNetwork.id]: '0x', // Replace with actual address
-    [zircuitTestnet.id]: '0x', // Replace with actual address
+    [incoNetwork.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5', // Replace with actual address
+    [zircuitTestnet.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5', // Replace with actual address
   }[chainId || 1];
 
   const initializeContract = async () => {

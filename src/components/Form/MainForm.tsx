@@ -81,7 +81,7 @@ const MintNFTForm: React.FC = () => {
       await provider.send('eth_requestAccounts', []);
       const signer = provider.getSigner();
 
-      const hash = await mintNFT(metadataURI, signer);
+      const hash = await mintNFT(funeralAdminPublicAddress, metadataURI, signer);
       setTransactionHash(hash);
       setIsModalOpen(true);
     } catch (error) {
