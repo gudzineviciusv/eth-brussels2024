@@ -20,12 +20,11 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
     const fetchPositions = async () => {
       setIsLoading(true);
       try {
-        const proxyUrl = `https://proxy.cors.sh/`;
+        const proxyUrl = `https://thingproxy.freeboard.io/fetch/`;
         const apiUrl = `https://api.zerion.io/v1/wallets/${walletAddress}/positions`;
 
         const response = await fetch(proxyUrl + apiUrl, {
           headers: {
-            'x-api-key': 'temp_f50e40d1547c7644126a6235e36e01d2',
             'Authorization': 'Basic ' + btoa('zk_dev_d8679fb297a247ba89c7589f8cea7464:qwer0poiu1'),
           },
         });
