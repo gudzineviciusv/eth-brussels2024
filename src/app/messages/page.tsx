@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import OptionTypeBase from "react-select";
 import ValueType from "react-select";
 import useAccountManager from '@/hooks/useFuneral';
@@ -58,7 +58,7 @@ const MessagesPage: React.FC = () => {
     }, [messages]);
 
 
-    const handleRecipientChange = (option: ValueType<RecipientOption>) => {
+    const handleRecipientChange = (option: SingleValue<RecipientOption>) => {
         const recipientOption = option as RecipientOption;
         setSelectedRecipient(recipientOption);
         setNewMessage(messages[recipientOption?.value] || '');
