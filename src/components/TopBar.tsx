@@ -19,9 +19,9 @@ const TopBar = () => {
     };
 
     const menuItems = [
-        { src: '/assets/crypto-will-image.png', alt: 'Crypto Will', href: '/page1', description: 'Crypto Will' },
+        { src: '/assets/crypto-will-image.png', alt: 'Crypto Will', href: '/messages', description: 'Crypto Will' },
         { src: '/assets/inheritors-list-image.png', alt: 'Inheritor list', href: '/page2', description: 'Inheritors List' },
-        { src: '/assets/report.png', alt: 'Report', href: '/page3', description: 'Report' },
+        { src: '/assets/report.png', alt: 'Report', href: '/report', description: 'Report' },
         { src: '/assets/kubok.png', alt: '', href: '/page4', description: 'Achievements' },
         { src: '/assets/crypto-will-image.png', alt: '', href: '/page5', description: 'Settings' },
     ];

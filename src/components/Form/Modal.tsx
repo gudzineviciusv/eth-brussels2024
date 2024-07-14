@@ -23,8 +23,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, description, imag
           <h2 className="text-xl font-bold text-white mb-2">{title}</h2>
           <p className="text-gray-400 mb-4">{description}</p>
           {transactionHash && (
-            <p className="text-gray-400 mb-4">
-              Transaction Hash: <a href={`https://sepolia.etherscan.io/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-500">{transactionHash}</a>
+            <p className="text-gray-400 mb-4" style={{ textWrap: 'wrap' }}>
+              Transaction Hash: <a href={`https://sepolia.etherscan.io/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-500" style={{lineBreak: 'anywhere'}}>{transactionHash}</a>
             </p>
           )}
           <button
