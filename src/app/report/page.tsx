@@ -42,15 +42,14 @@ const ReportPage: React.FC = () => {
     const checkNft = async (account: string) => {
         // TODO: rollback after testing
         setNftValid(true);
-        return;
 
         // try {
-        //     if (!reportContractAddress) {
+        //     if (!process.env.NEXT_PUBLIC_NFT_ADDRESS) {
         //         throw new Error('Contract address is not defined');
         //     }
 
         //     const provider = new ethers.providers.Web3Provider(window.ethereum);
-        //     const contract = new ethers.Contract(reportContractAddress, AccountManagerABI, provider);
+        //     const contract = new ethers.Contract(process.env.NEXT_PUBLIC_NFT_ADDRESS, AccountManagerABI, provider);
         //     const balance = await contract.balanceOf(account);
 
         //     if (balance.gt(0)) {

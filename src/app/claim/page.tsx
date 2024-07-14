@@ -1,37 +1,27 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
-
-// Temporary constants for testing
-const claimContractAddress = '0xYourClaimContractAddressHere'; // Replace with your contract address
-const claimContractABI = [
-    // Replace with your contract ABI
-    // Example ABI:
-    {
-        "constant": true,
-        "inputs": [{"name": "_owner", "type": "address"}],
-        "name": "balanceOf",
-        "outputs": [{"name": "balance", "type": "uint256"}],
-        "type": "function"
-    }
-];
+import useAccountManager from '@/hooks/useFuneral';
 
 const ClaimPage: React.FC = () => {
     const [account, setAccount] = useState<string | null>(null);
-    const [nftValid, setNftValid] = useState<boolean>(false);
+    const [isInWhitelist, setIsInWhitelist] = useState<boolean>(false);
+    const [isInBlacklist, setIsInBlacklist] = useState<boolean>(false);
     const [claiming, setClaiming] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
+
+    const { getMessage, claimFunds, getWhiteList, getBlackList } = useAccountManager();
 
     useEffect(() => {
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then((accounts: string[]) => {
                     setAccount(accounts[0]);
-                    checkNft(accounts[0]);
+                    checkStatus(accounts[0]);
                 })
                 .catch((err: Error) => {
                     setError('Please connect your wallet.');
@@ -42,28 +32,38 @@ const ClaimPage: React.FC = () => {
         }
     }, []);
 
-    const checkNft = async (account: string) => {
-        if (!account) return;
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(claimContractAddress, claimContractABI, provider);
-            const balance = await contract.balanceOf(account);
-            if (balance.gt(0)) {
-                setNftValid(true);
-            } else {
-                setError('No valid NFT found in your wallet.');
-            }
-        } catch (err) {
-            setError('Error checking NFT.');
-            console.error(err);
-        }
+    const checkStatus = async (account: string) => {
+        // TODO: rollback after testing
+        setMessage('Bye mom');
+        setIsInBlacklist(false);
+        setIsInWhitelist(true);
+
+        // try {
+        //     const message = await getMessage(account);
+        //     setMessage(message);
+
+        //     const whiteList = await getWhiteList();
+        //     const blackList = await getBlackList();
+
+        //     if (blackList.includes(account)) {
+        //         setIsInBlacklist(true);
+        //         setIsInWhitelist(false);
+        //     } else if (whiteList.includes(account)) {
+        //         setIsInWhitelist(true);
+        //         setIsInBlacklist(false);
+        //     } else {
+        //         setError('Account is neither in whitelist nor in blacklist.');
+        //     }
+        // } catch (err) {
+        //     setError('Error checking status.');
+        //     console.error(err);
+        // }
     };
 
     const handleClaim = async () => {
         setClaiming(true);
         try {
-            // Add logic to handle the claim process
-            // This might include interacting with another contract method
+            await claimFunds();
             alert('Will claimed successfully!');
         } catch (err) {
             setError('Error claiming the will.');
@@ -81,13 +81,13 @@ const ClaimPage: React.FC = () => {
                 {account && (
                     <div className="wallet-info">
                         <p>Connected wallet: {account}</p>
-                        {nftValid ? (
+                        {message && <p>{message}</p>}
+                        {isInWhitelist && (
                             <button onClick={handleClaim} disabled={claiming}>
                                 {claiming ? 'Claiming...' : 'Claim Will'}
                             </button>
-                        ) : (
-                            <p>No valid NFT found in your wallet.</p>
                         )}
+                        {isInBlacklist && <p>You are in the blacklist and cannot claim the will.</p>}
                     </div>
                 )}
             </div>
