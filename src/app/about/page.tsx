@@ -4,11 +4,12 @@ import React from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
+import ContentWrapper from '@/components/wrappers/ContentWrapper';
 
 const About: React.FC = () => {
     return (
         <BackgroundWrapper>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+            <ContentWrapper>
                 <h1 className="text-gray-700 text-4xl font-bold mb-10">Come to my funeral</h1>
 
                 {/* Functionality and Photos Grid */}
@@ -130,7 +131,7 @@ const About: React.FC = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </ContentWrapper>
             <Footer/>
         </BackgroundWrapper>
     );

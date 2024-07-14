@@ -8,6 +8,7 @@ import Select from 'react-select';
 import OptionTypeBase from "react-select";
 import ValueType from "react-select";
 import useAccountManager from '@/hooks/useFuneral';
+import ContentWrapper from '@/components/wrappers/ContentWrapper';
 
 const recipients = [1, 2, 3];
 
@@ -88,8 +89,8 @@ const MessagesPage: React.FC = () => {
     return (
         <BackgroundWrapper>
             <Header title="Messages" subtitle="Leave a message for recipients" />
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-                <div className="w-full max-w-7xl mt-10">
+            <ContentWrapper>
+                    <div className="w-full max-w-7xl mt-10">
                     <h2 className="text-2xl font-bold mb-4 text-gray-700">Leave Messages for Your Recipients</h2>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -131,7 +132,7 @@ const MessagesPage: React.FC = () => {
                         </div>
                     )}
                 </div>
-            </div>
+            </ContentWrapper>
             <Footer />
         </BackgroundWrapper>
     );
