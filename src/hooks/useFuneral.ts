@@ -107,7 +107,7 @@ const useAccountManager = () => {
     }
   };
 
-  const distributeFunds = async () => {
+  const reportDeath = async () => {
     const contract = await ensureContract();
     if (contract) {
       const tx = await contract.distributeFunds();
@@ -179,7 +179,7 @@ const useAccountManager = () => {
     addToBlackList,
     setAdministratorAccount,
     changeAdmin,
-    distributeFunds,
+    reportDeath,
     claimFunds,
     distributeRemainingFunds,
     setMessage,

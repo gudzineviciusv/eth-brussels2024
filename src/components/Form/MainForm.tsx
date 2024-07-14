@@ -2,7 +2,7 @@
 
 import React, { useState, ChangeEvent, use, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { abi, contractAddress } from '@/web3/contract';
+import { abi } from '@/web3/contract';
 import useMintNFT from '@/hooks/useNftMint';
 import Modal from './Modal';
 import Loader from './Loader';
@@ -29,7 +29,7 @@ const MintNFTForm: React.FC = () => {
   const [transactionHash, setTransactionHash] = useState<string>('');
   const [currentStep, setCurrentStep] = useState<number>(1);
 
-  const { mintNFT, isMinting, mintError } = useMintNFT(contractAddress, abi.abi);
+  const { mintNFT, isMinting, mintError } = useMintNFT( abi.abi);
   const { uploadToPinata, isUploading, uploadError } = usePinataUpload();
   const { addToWhiteList, addToBlackList, setAdministratorAccount } = useAccountManager();
 
