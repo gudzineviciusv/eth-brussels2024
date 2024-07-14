@@ -97,38 +97,36 @@ const ReportPage: React.FC = () => {
         <BackgroundWrapper>
             <Header title={'Report a Death'} subtitle={'Please connect your wallet to report a death'} />
             <ContentWrapper>
-                <div className="bg-gray-900 p-8 rounded-lg shadow-lg max-w-md w-full">
-                    {error && <div className="text-red-500 mb-4">{error}</div>}
-                    {account && (
-                        <div className="text-gray-300">
-                            <p className="mb-4">Connected wallet: {account}</p>
-                            {nftValid ? (
-                                <div>
-                                    <button
-                                        onClick={handleReport}
-                                        disabled={reporting || reported}
-                                        className="px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 w-full mb-4"
-                                    >
-                                        {reporting ? 'Reporting...' : 'Report Death'}
-                                    </button>
-                                    {reported && (
-                                        <div>
-                                            <QRCodeComponent text={qrLink} />
-                                            <p className="mt-4 text-center">
-                                                Report successful!{' '}
-                                                <a href={`/claim?walletAddress=${account}`} className="text-purple-500 underline">
-                                                    Go to claim
-                                                </a>
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-                            ) : (
-                                <p className="text-red-500">No valid NFT found in your wallet.</p>
-                            )}
-                        </div>
-                    )}
-                </div>
+                {error && <div className="text-red-500 mb-4">{error}</div>}
+                {account && (
+                    <div className="text-gray-300">
+                        <p className="mb-4">Connected wallet: {account}</p>
+                        {nftValid ? (
+                            <div>
+                                <button
+                                    onClick={handleReport}
+                                    disabled={reporting || reported}
+                                    className="px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 w-full mb-4"
+                                >
+                                    {reporting ? 'Reporting...' : 'Report Death'}
+                                </button>
+                                {reported && (
+                                    <div>
+                                        <QRCodeComponent text={qrLink} />
+                                        <p className="mt-4 text-center">
+                                            Report successful!{' '}
+                                            <a href={`/claim?walletAddress=${account}`} className="text-purple-500 underline">
+                                                Go to claim
+                                            </a>
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <p className="text-red-500">No valid NFT found in your wallet.</p>
+                        )}
+                    </div>
+                )}
             </ContentWrapper>
             <Footer />
         </BackgroundWrapper>

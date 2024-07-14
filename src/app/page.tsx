@@ -43,9 +43,7 @@ const HomePage: React.FC = () => {
                     <div>Treasury</div>
                 </button>
 
-                <div className="w-full md:w-3/4 lg:w-1/2 px-20 py-8">
-                    <MintNFTForm />
-                </div>
+                <MintNFTForm />
 
                 <button className="image-button" onClick={openModal}>
                     <img src="assets/inheritors-list-image.png" alt="Inheritors List" style={{ width: '130px', height: 'auto' }} />
