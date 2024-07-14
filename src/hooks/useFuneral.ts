@@ -13,7 +13,12 @@ const useAccountManager = () => {
 
   const { chainId } = useAccount();
 
-  const contractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
+  const contractAddress = {
+    [arbitrumSepolia.id]: '0xC4b46eE0533625Dad498d632f068c795Fa9bF5be',
+    [lineaTestnet.id]: '0xCC03f54E4A9D73331B9bC1cAc192cF89BB957472',
+    [incoNetwork.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5', 
+    [zircuitTestnet.id]: '0xFEB5B03A501f808b6E2ed717421012A7549098f5',
+  }[chainId || 1];
 
   const initializeContract = async () => {
     console.log('Initializing contract', contractAddress, chainId);
@@ -52,10 +57,10 @@ const useAccountManager = () => {
   const ensureContract = async () => {
     if (!contract) {
       const initializedContract = await initializeContract();
-      if (!initializedContract) {
-        console.error('Failed to initialize contract');
-        return null;
-      }
+        if (!initializedContract) {
+            console.error('Failed to initialize contract');
+            return null;
+        }
       return initializedContract;
     }
     console.log('Contract already initialized', contract);
@@ -102,10 +107,10 @@ const useAccountManager = () => {
     }
   };
 
-  const reportDeath = async () => {
+  const distributeFunds = async () => {
     const contract = await ensureContract();
     if (contract) {
-      const tx = await contract.reportDeath();
+      const tx = await contract.distributeFunds();
       await tx.wait();
     }
   };
@@ -145,16 +150,16 @@ const useAccountManager = () => {
 
   const getWhiteList = async () => {
     try {
-      const contract = await ensureContract();
-      if (contract) {
-        const whiteListAddresses = await contract.getWhiteList();
-        return whiteListAddresses;
-      }
-      console.log('No contract found');
-      return [];
+    const contract = await ensureContract();
+    if (contract) {
+      const whiteListAddresses = await contract.getWhiteList();
+      return whiteListAddresses;
+    }
+    console.log('No contract found');
+    return [];
     } catch (error) {
-      console.error('Error fetching whitelist:', error);
-      return [];
+        console.error('Error fetching whitelist:', error);
+        return [];
     }
   };
 
@@ -174,7 +179,7 @@ const useAccountManager = () => {
     addToBlackList,
     setAdministratorAccount,
     changeAdmin,
-    reportDeath,
+    distributeFunds,
     claimFunds,
     distributeRemainingFunds,
     setMessage,

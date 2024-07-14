@@ -298,7 +298,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "reportDeath",
+		"name": "distributeFunds",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
