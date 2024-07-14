@@ -8,6 +8,7 @@ import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import QRCodeComponent from '@/components/QRCodeComponent';
 import useAccountManager from '@/hooks/useFuneral';
 import AccountManagerABI from '@/web3/abi/ComeToMyFuneral.json';
+import { useAccount } from 'wagmi';
 import './report.scss'; // Import the SCSS file
 
 const reportContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
@@ -23,21 +24,30 @@ const ReportPage: React.FC = () => {
     const { account: userAccount, reportDeath } = useAccountManager();
 
     useEffect(() => {
-        if (window.ethereum) {
-            window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then((accounts: string[]) => {
-                    setAccount(accounts[0]);
-                    setQrLink(`${window.location.origin}/claim?walletAddress=${accounts[0]}`);
-                    checkNft(accounts[0]);
-                })
-                .catch((err: Error) => {
-                    setError('Please connect your wallet.');
-                    console.error(err);
-                });
-        } else {
-            setError('MetaMask is not installed.');
+        if (userAccount) {
+            setAccount(userAccount);
+            setQrLink(`${window.location.origin}/claim?walletAddress=${userAccount}`);
+            checkNft(userAccount);
         }
-    }, []);
+     
+    }, [userAccount]);
+
+    // useEffect(() => {
+    //     if (window.ethereum) {
+    //         window.ethereum.request({ method: 'eth_requestAccounts' })
+    //             .then((accounts: string[]) => {
+    //                 setAccount(accounts[0]);
+    //                 setQrLink(`${window.location.origin}/claim?walletAddress=${accounts[0]}`);
+    //                 checkNft(accounts[0]);
+    //             })
+    //             .catch((err: Error) => {
+    //                 setError('Please connect your wallet.');
+    //                 console.error(err);
+    //             });
+    //     } else {
+    //         setError('MetaMask is not installed.');
+    //     }
+    // }, []);
 
     const checkNft = async (account: string) => {
         // TODO: rollback after testing
