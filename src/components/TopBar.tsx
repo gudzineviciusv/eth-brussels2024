@@ -19,10 +19,10 @@ const TopBar = () => {
     };
 
     const menuItems = [
-        { src: '/assets/crypto-will-image.png', alt: 'Crypto Will', href: '/page1', description: 'Crypto Will Treasury' },
-        { src: '/assets/inheritors-list-image.png', alt: 'Inheritor list', href: '/page2', description: 'Inheritors List' },
+        { src: '/assets/crypto-will-image.png', alt: 'Crypto Will', href: '/', description: 'Crypto Will Treasury' },
+        { src: '/assets/inheritors-list-image.png', alt: 'Inheritor list', href: '/messages', description: 'Inheritors List' },
         { src: '/assets/report.png', alt: 'Report', href: '/report', description: 'Report' },
-        { src: '/assets/kubok.png', alt: '', href: '/page4', description: 'Achievements' },
+        { src: '/assets/kubok.png', alt: '', href: '/', description: 'Achievements' },
         { src: '/assets/inheritors-list-image.png', alt: '', href: '/messages', description: 'Messages' },
     ];
 

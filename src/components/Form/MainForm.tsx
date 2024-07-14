@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent, use, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { ethers } from 'ethers';
 import { abi } from '@/web3/contract';
 import useMintNFT from '@/hooks/useNftMint';
@@ -28,8 +28,9 @@ const MintNFTForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [transactionHash, setTransactionHash] = useState<string>('');
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  const { mintNFT, isMinting, mintError } = useMintNFT( abi.abi);
+  const { mintNFT, isMinting, mintError } = useMintNFT(abi.abi);
   const { uploadToPinata, isUploading, uploadError } = usePinataUpload();
   const { addToWhiteList, addToBlackList, setAdministratorAccount } = useAccountManager();
 
@@ -57,6 +58,8 @@ const MintNFTForm: React.FC = () => {
   };
 
   const handleNextStep = async () => {
+    setIsProcessing(true);
+
     try {
       const provider = new ethers.providers.Web3Provider((window as any).ethereum);
       await provider.send('eth_requestAccounts', []);
@@ -72,6 +75,8 @@ const MintNFTForm: React.FC = () => {
       setCurrentStep(currentStep + 1);
     } catch (error) {
       console.error('Error performing contract action:', error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -117,8 +122,9 @@ const MintNFTForm: React.FC = () => {
           <button
             className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             onClick={handleNextStep}
+            disabled={isProcessing}
           >
-            Next
+            {isProcessing ? <Loader/> : 'Next'}
           </button>
         </>
       )}
@@ -129,8 +135,9 @@ const MintNFTForm: React.FC = () => {
           <button
             className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             onClick={handleNextStep}
+            disabled={isProcessing}
           >
-            Next
+            {isProcessing ? <Loader/> : 'Next'}
           </button>
         </>
       )}
@@ -141,8 +148,9 @@ const MintNFTForm: React.FC = () => {
           <button
             className="px-4 py-2 bg-gray-700 bg-opacity-50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             onClick={handleNextStep}
+            disabled={isProcessing}
           >
-            Next
+            {isProcessing ? <Loader/> : 'Next'}
           </button>
         </>
       )}
