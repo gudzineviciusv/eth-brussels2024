@@ -1,0 +1,62 @@
+// styles.scss
+
+$primary-color: #007bff;
+$primary-hover-color: darken($primary-color, 10%);
+$secondary-color: #6c757d;
+$secondary-hover-color: darken($secondary-color, 10%);
+$error-color: #dc3545;
+
+.content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wallet-info {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+button {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: $primary-hover-color;
+  }
+
+  &:disabled {
+    background-color: $secondary-color;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}
+
+.error {
+  color: $error-color;
+  margin-top: 10px;
+}
+
+a {
+  color: $primary-color;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
