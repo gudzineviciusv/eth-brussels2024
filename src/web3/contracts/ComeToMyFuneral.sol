@@ -66,7 +66,7 @@ contract AccountManager {
         emit AdminChanged(oldAdmin, _newAdmin);
     }
 
-    function distributeFunds() external onlyAdmin {
+    function reportDeath() external onlyAdmin {
         uint256 totalAmount = address(this).balance;
         require(totalAmount > 0, "No funds to distribute");
 

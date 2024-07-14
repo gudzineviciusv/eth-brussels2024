@@ -6,28 +6,10 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import QRCodeComponent from '@/components/QRCodeComponent';
+import useAccountManager from '@/hooks/useFuneral';
+import AccountManagerABI from '@/web3/abi/ComeToMyFuneral.json';
 
-// Temporary constants for testing
-const reportContractAddress = '0xYourReportContractAddressHere'; // Replace with your contract address
-const reportContractABI = [
-    // Replace with your contract ABI
-    // Example ABI:
-    {
-        "constant": true,
-        "inputs": [{"name": "_owner", "type": "address"}],
-        "name": "balanceOf",
-        "outputs": [{"name": "balance", "type": "uint256"}],
-        "type": "function"
-    },
-    // Example function to get a specific address
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "getSpecialAddress",
-        "outputs": [{"name": "", "type": "address"}],
-        "type": "function"
-    }
-];
+const reportContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
 
 const ReportPage: React.FC = () => {
     const [account, setAccount] = useState<string | null>(null);
@@ -35,7 +17,8 @@ const ReportPage: React.FC = () => {
     const [reporting, setReporting] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [reported, setReported] = useState<boolean>(false);
-    const [contractAddress, setContractAddress] = useState<string | null>(null);
+
+    const { account: userAccount, reportDeath } = useAccountManager();
 
     useEffect(() => {
         if (window.ethereum) {
@@ -43,7 +26,6 @@ const ReportPage: React.FC = () => {
                 .then((accounts: string[]) => {
                     setAccount(accounts[0]);
                     checkNft(accounts[0]);
-                    fetchContractAddress();
                 })
                 .catch((err: Error) => {
                     setError('Please connect your wallet.');
@@ -55,46 +37,49 @@ const ReportPage: React.FC = () => {
     }, []);
 
     const checkNft = async (account: string) => {
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(reportContractAddress, reportContractABI, provider);
-            const balance = await contract.balanceOf(account);
-            if (balance.gt(0)) {
-                setNftValid(true);
-            } else {
-                setError('No valid NFT found in your wallet.');
-            }
-        } catch (err) {
-            setError('Error checking NFT.');
-            console.error(err);
-        }
-    };
+        // TODO: rollback after testing
+        setNftValid(true);
+        return;
 
-    const fetchContractAddress = async () => {
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(reportContractAddress, reportContractABI, provider);
-            const address = await contract.getSpecialAddress();
-            setContractAddress(address);
-        } catch (err) {
-            setError('Error fetching contract address.');
-            console.error(err);
-        }
+        // try {
+        //     if (!reportContractAddress) {
+        //         throw new Error('Contract address is not defined');
+        //     }
+
+        //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+        //     const contract = new ethers.Contract(reportContractAddress, AccountManagerABI, provider);
+        //     const balance = await contract.balanceOf(account);
+
+        //     if (balance.gt(0)) {
+        //         setNftValid(true);
+        //         return;
+        //     }
+
+        //     setError('No valid NFT found in your wallet.');
+        //     setNftValid(false);
+        // } catch (err) {
+        //     setError('Error checking NFT.');
+        //     console.error(err);
+        //     setNftValid(false);
+        // }
     };
 
     const handleReport = async () => {
         setReporting(true);
-        try {
-            // Add logic to handle the report process
-            // This might include interacting with another contract method
-            alert('Death reported successfully!');
-            setReported(true);
-        } catch (err) {
-            setError('Error reporting the death.');
-            console.error(err);
-        } finally {
-            setReporting(false);
-        }
+
+        // TODO: rollback after testing
+        setReported(true);
+
+        // try {
+        //     await reportDeath();
+        //     alert('Death reported successfully!');
+        //     setReported(true);
+        // } catch (err) {
+        //     setError('Error reporting the death.');
+        //     console.error(err);
+        // } finally {
+        //     setReporting(false);
+        // }
     };
 
     return (
@@ -110,10 +95,10 @@ const ReportPage: React.FC = () => {
                                 <button onClick={handleReport} disabled={reporting || reported}>
                                     {reporting ? 'Reporting...' : 'Report Death'}
                                 </button>
-                                {reported && contractAddress && (
+                                {reported && (
                                     <div>
-                                        <QRCodeComponent text={`https://yourdomain.com/claim?walletAddress=${contractAddress}`} />
-                                        <p>Report successful! <a href={`/claim?walletAddress=${contractAddress}`}>Go to claim</a></p>
+                                        <QRCodeComponent text={`https://localhost:8000/claim?walletAddress=${account}`} />
+                                        <p>Report successful! <a href={`/claim?walletAddress=${account}`}>Go to claim</a></p>
                                     </div>
                                 )}
                             </div>
