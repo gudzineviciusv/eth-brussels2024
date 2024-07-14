@@ -72,16 +72,16 @@ const ReportPage: React.FC = () => {
         // TODO: rollback after testing
         setReported(true);
 
-        // try {
-        //     await reportDeath();
-        //     alert('Death reported successfully!');
-        //     setReported(true);
-        // } catch (err) {
-        //     setError('Error reporting the death.');
-        //     console.error(err);
-        // } finally {
-        //     setReporting(false);
-        // }
+        try {
+            await reportDeath();
+            alert('Death reported successfully!');
+            setReported(true);
+        } catch (err) {
+            setError('Error reporting the death.');
+            console.error(err);
+        } finally {
+            setReporting(false);
+        }
     };
 
     return (
