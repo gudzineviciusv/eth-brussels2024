@@ -84,7 +84,7 @@ const ClaimPage: React.FC = () => {
                         <p>Connected wallet: {account}</p>
                         {message && <p>{message}</p>}
                         {isInWhitelist && (
-                            <button onClick={handleClaim} disabled={claiming}>
+                            <button className='px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 w-full mb-4' onClick={handleClaim} disabled={claiming}>
                                 {claiming ? 'Claiming...' : 'Claim Will'}
                             </button>
                         )}
