@@ -25,7 +25,7 @@ const ZerionPositionsModal: React.FC<ZerionPositionsModalProps> = ({ isOpen, onC
 
         const response = await fetch(proxyUrl + apiUrl, {
           headers: {
-            'x-api-key': 'temp_1a7abdafc066f83e2df563c06410435c',
+            'x-api-key': 'temp_f50e40d1547c7644126a6235e36e01d2',
             'Authorization': 'Basic ' + btoa('zk_dev_d8679fb297a247ba89c7589f8cea7464:qwer0poiu1'),
           },
         });
