@@ -21,31 +21,32 @@ const useAccountManager = () => {
   }[chainId || 1];
 
   const initializeContract = async () => {
+    console.log('Initializing contract', contractAddress, chainId);
+    if (typeof window.ethereum === 'undefined' || !contractAddress) {
+      console.error('Ethereum provider not found or contract address missing');
+      return null;
+    }
+
     try {
-      if (typeof window.ethereum !== 'undefined' && contractAddress) {
-        console.log('Contract address', contractAddress);
+      const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(web3Provider);
 
-        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(web3Provider);
+      const signer = web3Provider.getSigner();
+      setSigner(signer);
 
-        const signer = web3Provider.getSigner();
-        setSigner(signer);
+      const accountAddress = await signer.getAddress();
+      setAccount(accountAddress);
 
-        const accountAddress = await signer.getAddress();
-        setAccount(accountAddress);
-
-        const accountManagerContract = new ethers.Contract(contractAddress, AccountManagerABI, signer);
-        console.log('Web3 provider', accountManagerContract);
-
-        setContract(accountManagerContract);
-        console.log('Contract initialized');
-      }
+      const accountManagerContract = new ethers.Contract(contractAddress, AccountManagerABI, signer);
+      setContract(accountManagerContract);
+      return accountManagerContract;
     } catch (error) {
       console.error('Error initializing contract:', error);
       setAccount(null);
       setProvider(null);
       setSigner(null);
       setContract(null);
+      return null;
     }
   };
 
@@ -55,8 +56,14 @@ const useAccountManager = () => {
 
   const ensureContract = async () => {
     if (!contract) {
-      await initializeContract();
+      const initializedContract = await initializeContract();
+        if (!initializedContract) {
+            console.error('Failed to initialize contract');
+            return null;
+        }
+      return initializedContract;
     }
+    console.log('Contract already initialized', contract);
     return contract;
   };
 
@@ -142,14 +149,18 @@ const useAccountManager = () => {
   };
 
   const getWhiteList = async () => {
+    try {
     const contract = await ensureContract();
     if (contract) {
-      console.log('Fetching whitelist', contract);
       const whiteListAddresses = await contract.getWhiteList();
       return whiteListAddresses;
     }
     console.log('No contract found');
     return [];
+    } catch (error) {
+        console.error('Error fetching whitelist:', error);
+        return [];
+    }
   };
 
   const getBlackList = async () => {

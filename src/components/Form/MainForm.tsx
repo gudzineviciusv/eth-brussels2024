@@ -29,26 +29,13 @@ const MintNFTForm: React.FC = () => {
 
   const { mintNFT, isMinting, mintError } = useMintNFT(contractAddress, abi.abi);
   const { uploadToPinata, isUploading, uploadError } = usePinataUpload();
-  const { addToWhiteList, addToBlackList, setAdministratorAccount, getWhiteList } = useAccountManager();
+  const { addToWhiteList, addToBlackList, setAdministratorAccount } = useAccountManager();
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setSelectedImage(event.target.files[0]);
     }
   };
-
-  useEffect(() => {
-    const fetchWhiteList = async () => {
-      try {
-        const whitelist = await getWhiteList();
-        console.log(whitelist); // Log the retrieved whitelist
-      } catch (error) {
-        console.error('Error fetching whitelist:', error);
-      }
-    };
-
-    fetchWhiteList();
-  }, []);
 
   const handleUpload = async () => {
     if (!selectedImage || !title || !description) return;

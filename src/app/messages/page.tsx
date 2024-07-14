@@ -1,53 +1,79 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import Select from 'react-select';
 import OptionTypeBase from "react-select";
 import ValueType from "react-select";
+import useAccountManager from '@/hooks/useFuneral';
 
 const recipients = [1, 2, 3];
 
 interface RecipientOption extends OptionTypeBase {
-    value: number;
+    value: string;
     label: string;
     hasMessage: boolean;
 }
 
 const MessagesPage: React.FC = () => {
     const [selectedRecipient, setSelectedRecipient] = useState<RecipientOption | null>(null);
-    const [message, setMessage] = useState<string>('');
-    const [messages, setMessages] = useState<{ [key: number]: string }>({});
+    const [newMessage, setNewMessage] = useState<string>('');
+    const [messages, setMessages] = useState<{ [key: string]: string }>({});
+    const [ recipientOptions, setRecipientOptions ] = useState<RecipientOption[]>([]);
+    const { getWhiteList, getBlackList, setMessage } = useAccountManager();
+
+
+    useEffect(() => {
+        const getRecipients = async () => {
+            const whiteList = await getWhiteList() as string[];
+            const blackList = await getBlackList() as string[];
+
+            console.log('White list:', whiteList);
+            console.log('Black list:', blackList);
+
+            const blackListed = blackList.map((address: string) => {
+                return {
+                    value: address,
+                    label: `Blacklisted ${address}`,
+                    hasMessage: !!messages[address],
+                };
+            }) as unknown as RecipientOption[];
+
+            const whiteListed = whiteList.map((address: string) => {
+                return {
+                    value: address,
+                    label: `Whitelisted ${address}`,
+                    hasMessage: !!messages[address],
+                };
+            }) as unknown as RecipientOption[];
+
+            const recipients = blackListed.concat(whiteListed) as unknown as RecipientOption[];
+                
+            setRecipientOptions(recipients);
+        }
+        getRecipients();
+    }, [messages]);
+
 
     const handleRecipientChange = (option: ValueType<RecipientOption>) => {
         const recipientOption = option as RecipientOption;
         setSelectedRecipient(recipientOption);
-        setMessage(messages[recipientOption?.value] || '');
+        setNewMessage(messages[recipientOption?.value] || '');
     };
 
     const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMessage(e.target.value);
+        setNewMessage(e.target.value);
     };
 
     const saveMessage = () => {
         if (selectedRecipient) {
-            setMessages(prevMessages => ({
-                ...prevMessages,
-                [selectedRecipient.value]: message,
-            }));
-            setMessage('');
-            setSelectedRecipient(null);
+            setMessage(selectedRecipient.value, newMessage);
             console.log('Messages saved:', messages);
         }
     };
 
-    const recipientOptions: RecipientOption[] = recipients.map(recipient => ({
-        value: recipient,
-        label: `Recipient ${recipient}`,
-        hasMessage: !!messages[recipient],
-    }));
 
     const customStyles = {
         option: (provided: any, state: any) => ({
@@ -92,7 +118,7 @@ const MessagesPage: React.FC = () => {
                             </label>
                             <textarea
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                value={message}
+                                value={newMessage}
                                 onChange={handleMessageChange}
                                 placeholder={`Leave a message for ${selectedRecipient.label}`}
                             />
