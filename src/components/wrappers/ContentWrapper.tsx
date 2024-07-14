@@ -7,7 +7,7 @@ interface ContentWrapperProps {
 const ContentWrapper: React.FC<ContentWrapperProps> = ({ children }) => {
   return (
     <div className="flex justify-between items-start content-wrapper">
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div className="bg-black bg-opacity-60 p-8 rounded-lg border border-gray-500 max-w-md w-full">
             {children}
         </div>
     </div>

@@ -91,7 +91,7 @@ const MessagesPage: React.FC = () => {
             <Header title="Messages" subtitle="Leave a message for recipients" />
             <ContentWrapper>
                     <div className="w-full max-w-7xl mt-10">
-                    <h2 className="text-2xl font-bold mb-4 text-gray-700">Leave Messages for Your Recipients</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-white-700">Leave Messages for Your Recipients</h2>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2">
                             Select Recipient
