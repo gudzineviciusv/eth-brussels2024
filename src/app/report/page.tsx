@@ -8,6 +8,7 @@ import BackgroundWrapper from '@/components/wrappers/BackgroundWrapper';
 import QRCodeComponent from '@/components/QRCodeComponent';
 import useAccountManager from '@/hooks/useFuneral';
 import AccountManagerABI from '@/web3/abi/ComeToMyFuneral.json';
+import './report.scss'; // Import the SCSS file
 
 const reportContractAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
 
@@ -17,6 +18,7 @@ const ReportPage: React.FC = () => {
     const [reporting, setReporting] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [reported, setReported] = useState<boolean>(false);
+    const [qrLink, setQrLink] = useState<string>('');
 
     const { account: userAccount, reportDeath } = useAccountManager();
 
@@ -25,6 +27,7 @@ const ReportPage: React.FC = () => {
             window.ethereum.request({ method: 'eth_requestAccounts' })
                 .then((accounts: string[]) => {
                     setAccount(accounts[0]);
+                    setQrLink(`${window.location.origin}/claim?walletAddress=${accounts[0]}`);
                     checkNft(accounts[0]);
                 })
                 .catch((err: Error) => {
@@ -97,7 +100,7 @@ const ReportPage: React.FC = () => {
                                 </button>
                                 {reported && (
                                     <div>
-                                        <QRCodeComponent text={`https://localhost:8000/claim?walletAddress=${account}`} />
+                                        <QRCodeComponent text={qrLink} />
                                         <p>Report successful! <a href={`/claim?walletAddress=${account}`}>Go to claim</a></p>
                                     </div>
                                 )}

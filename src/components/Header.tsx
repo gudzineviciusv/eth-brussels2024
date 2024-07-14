@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle }) => {
         <p className="text-gray-300 text-center">{subtitle}</p>
         <div className="text-center mt-4">
           <Link href="/about" className="text-blue-500 hover:underline">
-            About
+            How it works
           </Link>
         </div>
       </div>
