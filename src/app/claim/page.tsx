@@ -25,7 +25,7 @@ const ClaimPage: React.FC = () => {
                     checkStatus(accounts[0]);
                 })
                 .catch((err: Error) => {
-                    setError('Claim assesst that you inherited');
+                    setError('Claim assets that you inherited');
                     console.error(err);
                 });
         } else {
